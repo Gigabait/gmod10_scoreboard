@@ -1,4 +1,4 @@
-# gmod10_scoreboard
+# Garry's Mod 10 Scoreboard for Garry's Mod 13
 Garry's Mod 10 scoreboard ported to 13
 This is pretty much a direct port of the gmod 10 scoreboard over to 13. Ratings and everything work.
 
