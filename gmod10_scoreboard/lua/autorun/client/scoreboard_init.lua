@@ -3,6 +3,13 @@ hook.Add( "Initialize", "GM10RemoveOldScoreboard", function()
 	GAMEMODE.ScoreboardShow = nil 
     GAMEMODE.ScoreboardHide = nil
     GAMEMODE.HUDDrawScoreBoard = nil
+	
+	if GAMEMODE.Name == "DarkRP" then
+		hook.Remove("ScoreboardHide", "FAdmin_scoreboard")
+		hook.Remove("ScoreboardShow", "FAdmin_scoreboard")		
+		
+		GM10_IsDarkRP = true
+	end
 end )
 
 include( "scoreboard.lua" )

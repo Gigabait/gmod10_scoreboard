@@ -25,22 +25,28 @@ function PANEL:Paint()
 
 	if ( !IsValid( self.Player ) ) then return end
 
-	local color = Color( 100, 150, 245, 255 )
-
+	local color = color_white
+	
+	if GM10_IsDarkRP then	
+		color = team.GetColor(self.Player:Team())
+	else
+		color = Color( 100, 150, 245, 255 )		
+		
+		if ( self.Player:Team() == TEAM_CONNECTING ) then
+			color = Color( 200, 120, 50, 255 )
+		elseif ( self.Player:IsAdmin() ) then
+			color = Color( 30, 200, 50, 255 )		
+		elseif ( self.Player:SteamID() == "STEAM_0:1:16806171" ) then //just a little pink color for me, i hope that's okay with you.
+			color = Color( 255, 105, 180, 255 )
+		end	
+	end
+	
 	if ( self.Armed ) then
 		color = Color( 110, 160, 245, 255 )
 	end
 	
 	if ( self.Selected ) then
 		color = Color( 50, 100, 245, 255 )
-	end
-	
-	if ( self.Player:Team() == TEAM_CONNECTING ) then
-		color = Color( 200, 120, 50, 255 )
-	elseif ( self.Player:IsAdmin() ) then
-		color = Color( 30, 200, 50, 255 )		
-	elseif ( self.Player:SteamID() == "STEAM_0:1:16806171" ) then //just a little pink color for me, i hope that's okay with you.
-		color = Color( 255, 105, 180, 255 )
 	end
 	
 	if ( self.Player == LocalPlayer() ) then
@@ -106,9 +112,12 @@ end
 function PANEL:UpdatePlayerData()
 
 	if ( !self.Player ) then return end
-	if ( !IsValid(self.Player) ) then return end
+	if ( !IsValid( self.Player) ) then return end
 
 	self.lblName:SetText( self.Player:Nick() )
+	if GM10_IsDarkRP then		
+		self.lblJob:SetText( team.GetName( self.Player:Team() ) )
+	end
 	self.lblFrags:SetText( self.Player:Frags() )
 	self.lblDeaths:SetText( self.Player:Deaths() )
 	self.lblPing:SetText( self.Player:Ping() )
@@ -126,7 +135,7 @@ function PANEL:UpdatePlayerData()
 	count = self:CheckRating( 'builder', count )
 	
 	count = self:CheckRating( 'bad', count )
-
+	
 end
 
 /*---------------------------------------------------------
@@ -140,6 +149,10 @@ function PANEL:Init()
 	self.infoCard	= vgui.Create( "ScorePlayerInfoCard", self )
 	
 	self.lblName 	= vgui.Create( "DLabel", self )
+	if GM10_IsDarkRP then		
+		self.lblJob 	= vgui.Create( "DLabel", self )
+		self.lblJob:SetMouseInputEnabled( false )
+	end
 	self.lblFrags 	= vgui.Create( "DLabel", self )
 	self.lblDeaths 	= vgui.Create( "DLabel", self )
 	self.lblPing 	= vgui.Create( "DLabel", self )
@@ -158,6 +171,10 @@ end
 function PANEL:ApplySchemeSettings()
 
 	self.lblName:SetFont( "ScoreboardPlayerName" )
+	if GM10_IsDarkRP then		
+		self.lblJob:SetFont( "ScoreboardPlayerName" )
+		self.lblJob:SetTextColor( color_white )
+	end
 	self.lblFrags:SetFont( "ScoreboardPlayerName" )
 	self.lblDeaths:SetFont( "ScoreboardPlayerName" )
 	self.lblPing:SetFont( "ScoreboardPlayerName" )
@@ -231,6 +248,14 @@ function PANEL:PerformLayout()
 	
 	self.lblName:SizeToContents()
 	self.lblName:SetPos( 24, 3 )
+	
+	if GM10_IsDarkRP then
+		self.lblJob:SizeToContents()
+	
+		local jobW, jobH = surface.GetTextSize( self.lblJob:GetText() )
+		
+		self.lblJob:SetPos( self:GetWide()/2 - jobW/2.5, 3 )	
+	end
 	
 	local COLUMN_SIZE = 50
 	

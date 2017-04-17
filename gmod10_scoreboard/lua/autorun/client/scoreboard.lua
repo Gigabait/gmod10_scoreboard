@@ -32,6 +32,11 @@ function PANEL:Init()
 	// Update the scoreboard every 1 second
 	timer.Create( "ScoreboardUpdater", 1, 0, self.UpdateScoreboard, self )
 	
+	if GM10_IsDarkRP then
+		self.lblJobName = vgui.Create( "DLabel", self )
+		self.lblJobName:SetText( "Job" )	
+	end
+	
 	self.lblPing = vgui.Create( "DLabel", self )
 	self.lblPing:SetText( "Ping" )
 	
@@ -151,8 +156,15 @@ function PANEL:PerformLayout()
 	self.lblDeaths:SetPos( self:GetWide() - 50*2 - self.lblDeaths:GetWide()/2, self.PlayerFrame.y - self.lblPing:GetTall() - 3  )
 	self.lblKills:SetPos( self:GetWide() - 50*3 - self.lblKills:GetWide()/2, self.PlayerFrame.y - self.lblPing:GetTall() - 3  )
 	
+	self.lblPing:SetFont( "DefaultSmall" )
 	self.lblKills:SetFont( "DefaultSmall" )
 	self.lblDeaths:SetFont( "DefaultSmall" )
+	
+	if GM10_IsDarkRP then
+		self.lblJobName:SizeToContents()
+		self.lblJobName:SetPos( self:GetWide()/2 - self.lblJobName:GetWide()/2, self.PlayerFrame.y - self.lblPing:GetTall() - 3  )	
+		self.lblJobName:SetFont( "DefaultSmall" )
+	end
 
 end
 
@@ -175,6 +187,10 @@ function PANEL:ApplySchemeSettings()
 	self.lblKills:SetTextColor( Color( 0, 0, 0, 100 ) )
 	self.lblDeaths:SetTextColor( Color( 0, 0, 0, 100 ) )
 
+	if GM10_IsDarkRP then
+		self.lblJobName:SetFont( "DefaultSmall" )
+		self.lblJobName:SetTextColor( Color( 0, 0, 0, 100 ) )
+	end
 end
 
 
