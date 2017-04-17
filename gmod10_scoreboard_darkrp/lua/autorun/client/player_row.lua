@@ -25,7 +25,6 @@ function PANEL:Paint()
 
 	if ( !IsValid( self.Player ) ) then return end
 
-	//local color = Color( 100, 150, 245, 255 )
 	local color = team.GetColor(self.Player:Team())
 	if ( self.Armed ) then
 		color = Color( 110, 160, 245, 255 )
@@ -34,14 +33,6 @@ function PANEL:Paint()
 	if ( self.Selected ) then
 		color = Color( 50, 100, 245, 255 )
 	end
-	
-	/*if ( self.Player:Team() == TEAM_CONNECTING ) then
-		color = Color( 200, 120, 50, 255 )
-	elseif ( self.Player:IsAdmin() ) then
-		color = Color( 30, 200, 50, 255 )		
-	elseif ( self.Player:SteamID() == "STEAM_0:1:16806171" ) then //just a little pink color for me, i hope that's okay with you.
-		color = Color( 255, 105, 180, 255 )
-	end*/
 	
 	if ( self.Player == LocalPlayer() ) then
 	
